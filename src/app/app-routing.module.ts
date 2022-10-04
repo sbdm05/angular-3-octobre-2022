@@ -1,24 +1,48 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { PageForgotPasswordComponent } from './login/pages/page-forgot-password/page-forgot-password.component';
-import { PageResetPasswordComponent } from './login/pages/page-reset-password/page-reset-password.component';
-import { PageSignInComponent } from './login/pages/page-sign-in/page-sign-in.component';
-import { PageSignUpComponent } from './login/pages/page-sign-up/page-sign-up.component';
-import { PageNotFoundComponent } from './page-not-found/pages/page-not-found/page-not-found.component';
+import {
+  PreloadAllModules,
+  Router,
+  RouterModule,
+  Routes,
+} from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
-  { path: 'sign-in', component: PageSignInComponent },
-  // créer route pour sign-up; reset-password et forgot-password
-  { path: 'sign-up', component: PageSignUpComponent },
-  { path: 'reset-password', component: PageResetPasswordComponent },
-  { path: 'forgot-password', component: PageForgotPasswordComponent },
+  // lazyloading pour login
+  {
+    path: '',
+    loadChildren: () =>
+      import('./login/login.module').then((m) => m.LoginModule),
+  },
+  // lazyloading pour le module orders
+  {
+    path: 'orders',
+    loadChildren: () =>
+      import('./orders/orders.module').then((m) => m.OrdersModule),
+  },
+  {
+    path: 'clients',
+    loadChildren: () =>
+      import('./clients/clients.module').then((m) => m.ClientsModule),
+  },
   // cas 404 = wildcard
-  { path: '**', component: PageNotFoundComponent},
+  {
+    path: '**',
+    loadChildren: () =>
+      import('./page-not-found/page-not-found.module').then(
+        (m) => m.PageNotFoundModule
+      ),
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+  ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+  constructor(private router: Router) {
+    // accèder à .config
+    console.log(this.router.config, 'tableau de routes');
+  }
+}
