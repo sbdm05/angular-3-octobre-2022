@@ -10,7 +10,8 @@
     "compodoc:build": "compodoc -p tsconfig.doc.json",
     "compodoc:build-and-serve": "compodoc -p tsconfig.doc.json -s",
     "compodoc:serve": "compodoc -s",
-    "compodoc": "compodoc -p tsconfig.json -o -s"
+    "compodoc": "compodoc -p tsconfig.json -o -s",
+    "jsonServer": "json-server -p 4009 --watch mock_db/db.json"
   },
   "private": true,
   "dependencies": {
