@@ -12,7 +12,7 @@ export class OrdersService {
 
   constructor(private http: HttpClient) {
     // this.http.get('urlAPI');
-    this.collection = this.http.get<Order[]>('http://localhost:4009/orders');
+    this.collection = this.http.get<Order[]>('http://localhost:4009/orders')
   }
 
   // créer des prorpiétés et méthodes
