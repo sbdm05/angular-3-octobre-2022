@@ -53,8 +53,12 @@ export class PageListOrdersComponent implements OnInit {
     const target = event.target as HTMLSelectElement;
     // console.log(target);
     const state = target.value as StateOrder;
-    console.log(state);
+    console.log(state); // confirmed; cancelled; option
     // déclencher dans le service une fonction changeState
-    
+    this.ordersService.changeState(i, state).subscribe((data) => {
+      console.log(data);
+      // i = data;
+      Object.assign(i, data);
+    });
   }
 }

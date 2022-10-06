@@ -17,7 +17,12 @@
 
       <td >{{i | total | currency }}</td>
       <td>{{i | total : true | currency}}</td>
-      <td>
+      <!-- <td [ngClass]="{
+        'state-cancelled' : i.state === 'CANCELLED',
+        'state-option' : i.state === 'OPTION',
+        'state-confirmed': i.state === 'CONFIRMED'
+      }"> -->
+      <td appState [etat]='i.state'>
         <select (change)='changeState(i, $event)'>
           <!-- comparer state avec i.state -->
           <option *ngFor='let state of states' [value]='state' [selected]='state === i.state'>{{state}}</option>
