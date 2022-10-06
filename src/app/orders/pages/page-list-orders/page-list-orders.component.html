@@ -1,7 +1,7 @@
 
 <!-- afficher le template full-width -->
 <!-- property binding -->
-<app-template-full-width [title]="titleParent" *ngIf='collection'>
+<app-template-full-width [title]="titleParent" *ngIf="collection$ | async as collection">
 
   <!-- envoyer dans le content de app-template-full-width -->
   <!-- ng-content -->
@@ -15,9 +15,16 @@
       <td>{{i.nbJours}}</td>
       <td>{{i.tjmHt}}</td>
 
-      <td>{{i.tjmHt | total : i.nbJours }}</td>
-      <td>{{i.tjmHt | total : i.nbJours : i.tva }}</td>
-      <td>{{i.state}}</td>
+      <td >{{i | total | currency }}</td>
+      <td>{{i | total : true | currency}}</td>
+      <td>
+        <select (change)='changeState(i, $event)'>
+          <!-- comparer state avec i.state -->
+          <option *ngFor='let state of states' [value]='state' [selected]='state === i.state'>{{state}}</option>
+
+        </select>
+
+      </td>
 
 
     </tr>
@@ -27,6 +34,7 @@
 
 
 </app-template-full-width>
+
 
 
 

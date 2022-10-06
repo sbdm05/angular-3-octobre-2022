@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { DEFAULT_CURRENCY_CODE, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { OrdersRoutingModule } from './orders-routing.module';
@@ -7,17 +7,15 @@ import { PageAddOrderComponent } from './pages/page-add-order/page-add-order.com
 import { PageEditOrderComponent } from './pages/page-edit-order/page-edit-order.component';
 import { SharedModule } from '../shared/shared.module';
 
-
 @NgModule({
   declarations: [
     PageListOrdersComponent,
     PageAddOrderComponent,
-    PageEditOrderComponent
+    PageEditOrderComponent,
   ],
-  imports: [
-    CommonModule,
-    OrdersRoutingModule,
-    SharedModule
+  imports: [CommonModule, OrdersRoutingModule, SharedModule],
+  providers: [
+    {provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR'}
   ]
 })
-export class OrdersModule { }
+export class OrdersModule {}
