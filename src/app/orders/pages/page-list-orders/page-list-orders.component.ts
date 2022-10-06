@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { StateOrder } from 'src/app/core/enums/state-order';
 import { Order } from 'src/app/core/models/order';
@@ -18,6 +19,7 @@ export class PageListOrdersComponent implements OnInit {
   public titleParent = 'Liste des commandes';
 
   public headers = [
+    'Action',
     'Type',
     'Client',
     'NbJours',
@@ -28,7 +30,7 @@ export class PageListOrdersComponent implements OnInit {
   ];
 
   // obtenir le tableau
-  constructor(private ordersService: OrdersService) {
+  constructor(private ordersService: OrdersService, private router: Router) {
     // utiliser le pipe async à la place du subscribe
     this.collection$ = this.ordersService.collection;
 
@@ -60,5 +62,10 @@ export class PageListOrdersComponent implements OnInit {
       // i = data;
       Object.assign(i, data);
     });
+  }
+
+  public goToEdit(id: number) {
+    console.log('icone cliquée');
+    this.router.navigate(['orders', 'edit', id]);
   }
 }

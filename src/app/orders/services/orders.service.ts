@@ -56,4 +56,17 @@ export class OrdersService {
     // localhost/3000/orders/id, obj
     return this.http.put<Order>(`${this.urlApi}/orders/${obj.id}`, obj);
   }
+
+  // ajouter une méthode add()
+  // this.http.post('url/orders, obj')
+  public add(item: Order): Observable<Order> {
+    return this.http.post<Order>(`${this.urlApi}/orders`, item);
+  }
+
+  // méthode pour retrouver un objet par son id
+  // getItemById(id)
+  // this.http.get('url/orders/id')
+  public getItemById(id: number): Observable<Order> {
+    return this.http.get<Order>(`${this.urlApi}/orders/${id}`);
+  }
 }

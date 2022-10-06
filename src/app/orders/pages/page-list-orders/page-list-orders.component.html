@@ -10,6 +10,10 @@
     <tr *ngFor='let i of collection'>
 
       <!--  table data cells (td)-->
+      <td>
+        <!-- ajouter un evenement au clic  -->
+        <app-icon-edit (click)='goToEdit(i.id)'></app-icon-edit>
+      </td>
       <td>{{i.typePresta | uppercase }}</td>
       <td>{{i.client}}</td>
       <td>{{i.nbJours}}</td>
