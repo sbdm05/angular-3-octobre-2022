@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, map, BehaviorSubject, tap } from 'rxjs';
 import { StateOrder } from 'src/app/core/enums/state-order';
 import { Order } from 'src/app/core/models/order';
 import { environment } from 'src/environments/environment';
@@ -12,41 +12,56 @@ import { environment } from 'src/environments/environment';
 export class OrdersService {
   private urlApi = environment.urlApi;
 
-  private collection$!: Observable<Order[]>;
+  private collection$: BehaviorSubject<Order[]> = new BehaviorSubject<Order[]>(
+    []
+  );
   // collection$ devient un observable chaud (BehaviorSubject ou Subject)
 
   constructor(private http: HttpClient) {
     // this.http.get('urlAPI');
-
-    this.collection = this.http.get<Order[]>(`${this.urlApi}/orders`).pipe(
-      map((tab) => {
-        // tab.map; tab.filter
-        return tab.map((obj) => {
-          return new Order(obj);
-        });
-      })
-    );
+    // this.collection = this.http.get<Order[]>(`${this.urlApi}/orders`).pipe(
+    //   map((tab) => {
+    //     // tab.map; tab.filter
+    //     return tab.map((obj) => {
+    //       return new Order(obj);
+    //     });
+    //   })
+    // );
+    this.refreshCollection();
   }
 
   // créer des prorpiétés et méthodes
 
   // appel http
   get collection() {
+    this.refreshCollection();
     return this.collection$;
   }
   // this.ordersService.collection.subscribe()
 
   // setter
-  set collection(col: Observable<Order[]>) {
-    this.collection$ = col;
-  }
-
+  // set collection(col: Observable<Order[]>) {
+  //   this.collection$ = col;
+  // }
 
   // créer une fonction refreshCollection
   // faire le get
   // subscribe(data=> this.collection$.next(data))
-
-
+  public refreshCollection() {
+    this.http
+      .get<Order[]>(`${this.urlApi}/orders`)
+      .pipe(
+        map((tab) => {
+          // tab.map; tab.filter
+          return tab.map((obj) => {
+            return new Order(obj);
+          });
+        })
+      )
+      .subscribe((data) => {
+        this.collection$.next(data);
+      });
+  }
 
   // méthode changeState()
   public changeState(i: Order, state: StateOrder): Observable<Order> {
@@ -79,10 +94,12 @@ export class OrdersService {
   }
 
   // méthode pour delete
-  public delete(id: number): Observable<Order>{
-    return this.http.delete<Order>(`${this.urlApi}/orders/${id}`);
-    // .pipe(tap(()=>{ this.refreshCollection()}))
+  public delete(id: number): Observable<Order> {
+    // l'opérateur tap permet de déclencher une nouvelle fonction (intermédiaire)
+    return this.http.delete<Order>(`${this.urlApi}/orders/${id}`).pipe(
+      tap(() => {
+        this.refreshCollection();
+      })
+    );
   }
-
-
 }

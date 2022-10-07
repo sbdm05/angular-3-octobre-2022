@@ -5,50 +5,10 @@
       "nbJours": 10,
       "tva": 20,
       "state": "CONFIRMED",
-      "typePresta": "formation",
+      "typePresta": "formationDev",
       "client": "Modis",
       "comment": "fgddhf",
       "id": 2
-    },
-    {
-      "tjmHt": 1200,
-      "nbJours": 1,
-      "tva": 20,
-      "state": "CONFIRMED",
-      "typePresta": "formation",
-      "client": "Capgemini",
-      "comment": null,
-      "id": 3
-    },
-    {
-      "tjmHt": 1200,
-      "nbJours": 12,
-      "tva": 20,
-      "state": "CANCELLED",
-      "typePresta": "formation",
-      "client": "Capgemini",
-      "comment": "OK ",
-      "id": 4
-    },
-    {
-      "tjmHt": 1200,
-      "nbJours": 8,
-      "tva": 20,
-      "state": "OPTION",
-      "typePresta": "coaching",
-      "client": "Modis",
-      "comment": "OK",
-      "id": 5
-    },
-    {
-      "tjmHt": 1200,
-      "nbJours": 1,
-      "tva": 20,
-      "state": "OPTION",
-      "typePresta": "forma",
-      "client": "test",
-      "comment": null,
-      "id": 6
     }
   ],
   "clients": [

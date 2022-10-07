@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StateOrder } from 'src/app/core/enums/state-order';
 import { Order } from 'src/app/core/models/order';
 
@@ -22,7 +22,7 @@ export class FormOrderComponent implements OnInit {
     console.log(this.init); ///
     // initialiser le formulaire
     this.form = this.fb.group({
-      tjmHt: [this.init.tjmHt],
+      tjmHt: [this.init.tjmHt, [Validators.minLength(4), Validators.maxLength(10)]],
       nbJours: [this.init.nbJours],
       tva: [this.init.tva],
       state: [this.init.state],
@@ -32,7 +32,7 @@ export class FormOrderComponent implements OnInit {
       id: [this.init.id],
     });
   }
-
+// .errors?.validation
   onSubmit() {
     console.log(this.form.value);
     // déclencher submitted
