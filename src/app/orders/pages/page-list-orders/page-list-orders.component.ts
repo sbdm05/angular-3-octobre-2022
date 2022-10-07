@@ -68,4 +68,12 @@ export class PageListOrdersComponent implements OnInit {
     console.log('icone cliquée');
     this.router.navigate(['orders', 'edit', id]);
   }
+
+  public onDelete(id: number) {
+    // faire appel vers le service
+    console.log(typeof id, 'id');
+    this.ordersService.delete(id).subscribe((data) => {
+      console.log(data);
+    }); // {}
+  }
 }

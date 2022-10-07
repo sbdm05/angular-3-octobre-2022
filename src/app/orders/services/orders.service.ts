@@ -13,6 +13,7 @@ export class OrdersService {
   private urlApi = environment.urlApi;
 
   private collection$!: Observable<Order[]>;
+  // collection$ devient un observable chaud (BehaviorSubject ou Subject)
 
   constructor(private http: HttpClient) {
     // this.http.get('urlAPI');
@@ -39,6 +40,13 @@ export class OrdersService {
   set collection(col: Observable<Order[]>) {
     this.collection$ = col;
   }
+
+
+  // créer une fonction refreshCollection
+  // faire le get
+  // subscribe(data=> this.collection$.next(data))
+
+
 
   // méthode changeState()
   public changeState(i: Order, state: StateOrder): Observable<Order> {
@@ -69,4 +77,12 @@ export class OrdersService {
   public getItemById(id: number): Observable<Order> {
     return this.http.get<Order>(`${this.urlApi}/orders/${id}`);
   }
+
+  // méthode pour delete
+  public delete(id: number): Observable<Order>{
+    return this.http.delete<Order>(`${this.urlApi}/orders/${id}`);
+    // .pipe(tap(()=>{ this.refreshCollection()}))
+  }
+
+
 }

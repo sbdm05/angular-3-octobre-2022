@@ -13,6 +13,8 @@
       <td>
         <!-- ajouter un evenement au clic  -->
         <app-icon-edit (click)='goToEdit(i.id)'></app-icon-edit>
+        <!-- ajouter une icone app-icon-delete -->
+        <app-icon-delete (click)='onDelete(i.id)'></app-icon-delete>
       </td>
       <td>{{i.typePresta | uppercase }}</td>
       <td>{{i.client}}</td>
